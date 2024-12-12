@@ -1,0 +1,4 @@
+fastAPI
+neo4j
+pydantic
+uvicorn
