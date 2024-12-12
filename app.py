@@ -43,6 +43,7 @@ with GraphDatabase.driver(URI) as driver:
 async def root():
     return {"message": "Welcome to the Witcher Database API"}
 
+
 # Add a node
 @app.post("/add_node")
 async def add_node(data: NodeData):
