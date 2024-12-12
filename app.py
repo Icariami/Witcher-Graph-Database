@@ -36,7 +36,7 @@ AUTH = ("neo4j", "eErpx-x1P6HPMRzBq1Cl_zNeV6jICuJTvqSXZxLXCDI")
 
 with GraphDatabase.driver(URI) as driver:
     driver.verify_connectivity()
-    print("Connection to the database established.")
+    console.log("Connection to the database established.")
 
 # Root endpoint to test server
 @app.get("/")
@@ -182,45 +182,6 @@ async def get_node_names(label: str):
             results = session.run(query)
             names = [record["name"] for record in results if record["name"] is not None]
             return {"names": names}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-@app.get("/graph_data")
-async def get_graph_data():
-    try:
-        with driver.session() as session:
-            query = """
-            MATCH (n)-[r]->(m)
-            RETURN n, r, m
-            """
-            results = session.run(query)
-            
-            elements = []
-            for record in results:
-                # Add nodes
-                elements.append({
-                    "data": {
-                        "id": record["n"].id,
-                        "label": record["n"]["name"], # Replace with your node label property
-                    }
-                })
-                elements.append({
-                    "data": {
-                        "id": record["m"].id,
-                        "label": record["m"]["name"], # Replace with your node label property
-                    }
-                })
-                # Add relationship
-                elements.append({
-                    "data": {
-                        "id": f"{record['n'].id}-{record['m'].id}",
-                        "source": record["n"].id,
-                        "target": record["m"].id,
-                        "type": record["r"].type,
-                    }
-                })
-
-            return {"elements": elements}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
