@@ -31,8 +31,8 @@ class RelationshipData(BaseModel):
     node2_properties: Dict[str, str]  # Properties to identify the second node
     relationship_type: str  # Type of relationship (e.g., "FRIEND", "WEAK_TO")
 
-URI = "bolt://localhost:7687"
-AUTH = ("neo4j", "test1234!")
+URI = "neo4j+s://9a8e1e42.databases.neo4j.io"
+AUTH = ("neo4j", "eErpx-x1P6HPMRzBq1Cl_zNeV6jICuJTvqSXZxLXCDI")
 
 with GraphDatabase.driver(URI) as driver:
     driver.verify_connectivity()
