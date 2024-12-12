@@ -65,5 +65,4 @@ jobs:
         id: deploy-to-webapp
         with:
           app-name: 'chmury-back'
-          slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4D0BB96F0D6C47738C02E59A0EC55B88 }}
