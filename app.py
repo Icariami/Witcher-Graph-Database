@@ -2,20 +2,19 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from neo4j import GraphDatabase
 
-# Initialize FastAPI
-app = FastAPI()
-
 from pydantic import BaseModel
 from typing import Dict
 
 from fastapi.middleware.cors import CORSMiddleware
+# Initialize FastAPI
+app = FastAPI()
 
 # Add CORS middleware to allow cross-origin requests
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins (for testing)
+    allow_origins=["https://chmury-front.azurewebsites.net/"],  # Allows all origins (for testing)
     allow_credentials=True,
-    allow_methods=["*"],  # Allows all methods
+    allow_methods=["GET","POST","PUT","DELETE"],  # Allows all methods
     allow_headers=["*"],  # Allows all headers
 )
 
@@ -38,15 +37,7 @@ frontend_url = "https://chmury-front.azurewebsites.net"
 with GraphDatabase.driver(URI) as driver:
     driver.verify_connectivity()
     console.log("Connection to the database established.")
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[frontend_url],  # Allow requests from the frontend domain
-    allow_credentials=True,
-    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
-    allow_headers=["*"],  # Allow all headers
-)
-
+    
 # Root endpoint to test server
 @app.get("/")
 async def root():
