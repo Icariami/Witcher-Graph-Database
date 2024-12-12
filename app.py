@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from neo4j import GraphDatabase
 
 # Initialize FastAPI
@@ -33,10 +34,18 @@ class RelationshipData(BaseModel):
 
 URI = "neo4j+s://9a8e1e42.databases.neo4j.io"
 AUTH = ("neo4j", "eErpx-x1P6HPMRzBq1Cl_zNeV6jICuJTvqSXZxLXCDI")
-
+frontend_url = "https://chmury-front.azurewebsites.net"
 with GraphDatabase.driver(URI) as driver:
     driver.verify_connectivity()
     console.log("Connection to the database established.")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[frontend_url],  # Allow requests from the frontend domain
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allow all headers
+)
 
 # Root endpoint to test server
 @app.get("/")
